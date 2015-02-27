@@ -9,9 +9,16 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View;
+import android.util.Log;
 
 
 public class QuizActivity extends ActionBarActivity {
+
+    //logging tag
+    private static final String TAG = "QuizActivity";
+
+    //key for bundle to retrieve index state
+    private static final String KEY_INDEX = "index";
 
     private Button mTrueButton;
     private Button mFalseButton;
@@ -33,13 +40,36 @@ public class QuizActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
         super.onCreate(savedInstanceState);
+
+        Log.d(TAG, "onCreate(Bundle) called");
+
         setContentView(R.layout.activity_quiz);
 
         bindUiElementReferences();
         bindOnClickListeners();
+        BindCurrentQuestionIndex(savedInstanceState);
         updateQuestion();
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "onSaveInstanceState");
+        savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
+    }
+
+    /**
+     * checks the last saved state to see if we had updated the current question index
+     * maps the last saved index to mCurrentIndex
+     * @param savedInstanceState the last saved state of the app
+     */
+    private void BindCurrentQuestionIndex(Bundle savedInstanceState){
+        if (savedInstanceState != null) {
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+        }
     }
 
     /*
@@ -146,6 +176,38 @@ public class QuizActivity extends ActionBarActivity {
         mPrevButton = (ImageButton)findViewById(R.id.prev_button);
         mQuestionTextView = (TextView)findViewById(R.id.question_text_view);
     }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart() called");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause() called");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume() called");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop() called");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy() called");
+    }
+
 
 
     @Override
