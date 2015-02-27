@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View;
@@ -14,7 +15,8 @@ public class QuizActivity extends ActionBarActivity {
 
     private Button mTrueButton;
     private Button mFalseButton;
-    private Button mNextButton;
+    private ImageButton mNextButton;
+    private ImageButton mPrevButton;
 
     private TextView mQuestionTextView;
 
@@ -67,12 +69,31 @@ public class QuizActivity extends ActionBarActivity {
 
         });
 
+        mPrevButton.setOnClickListener(new View.OnClickListener(){
+           @Override
+            public void onClick(View v){
+               goToPrevQuestion();
+           }
+        });
+
         mQuestionTextView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 goToNextQuestion();
             }
         });
+    }
+
+    /**
+     * displays previous question for the user
+     * goes back to last question if called on question stored in first index of question store
+     */
+    private void goToPrevQuestion() {
+        --mCurrentIndex;
+        if (mCurrentIndex < 0){
+            mCurrentIndex = mQuestionBank.length - 1;
+        }
+        updateQuestion();
     }
 
     /**
@@ -121,7 +142,8 @@ public class QuizActivity extends ActionBarActivity {
         //get references to the inflated view objects
         mTrueButton = (Button)findViewById(R.id.true_button);
         mFalseButton = (Button)findViewById(R.id.false_button);
-        mNextButton = (Button)findViewById(R.id.next_button);
+        mNextButton = (ImageButton)findViewById(R.id.next_button);
+        mPrevButton = (ImageButton)findViewById(R.id.prev_button);
         mQuestionTextView = (TextView)findViewById(R.id.question_text_view);
     }
 
