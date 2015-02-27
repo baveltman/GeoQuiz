@@ -4,14 +4,38 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.view.View;
 
 
 public class QuizActivity extends ActionBarActivity {
+
+    private Button mTrueButton;
+    private Button mFalseButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
+
+        //get references to the inflated view objects for the buttons
+        mTrueButton = (Button)findViewById(R.id.true_button);
+        mFalseButton = (Button)findViewById(R.id.false_button);
+
+        //set onclick listeners for buttons
+        mTrueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Does nothing yet, but soon!
+            }
+        });
+
+        mFalseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Does nothing yet, but soon!
+            }
+        });
     }
 
 
