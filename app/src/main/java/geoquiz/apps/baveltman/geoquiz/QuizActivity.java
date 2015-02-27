@@ -30,19 +30,20 @@ public class QuizActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        BindButtons();
-        BindFirstQuestion();
-        BindButtonListeners();
+        bindUiElementReferences();
+        bindOnClickListeners();
+        updateQuestion();
 
     }
 
     /*
-    Sets up listeners for true, false, and next buttons
+    Sets up onClick listeners for the UI elements in the layout
      */
-    private void BindButtonListeners() {
+    private void  bindOnClickListeners() {
         //set onclick listeners for buttons
         mTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,14 +62,29 @@ public class QuizActivity extends ActionBarActivity {
         mNextButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                ++mCurrentIndex;
-                if (mCurrentIndex >= mQuestionBank.length){
-                    mCurrentIndex = 0;
-                }
-                updateQuestion();
+                goToNextQuestion();
             }
 
         });
+
+        mQuestionTextView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                goToNextQuestion();
+            }
+        });
+    }
+
+    /**
+     * displays next question for the user
+     * goes back to first question if called on question stored in last index of question store
+     */
+    private void goToNextQuestion(){
+        ++mCurrentIndex;
+        if (mCurrentIndex >= mQuestionBank.length){
+            mCurrentIndex = 0;
+        }
+        updateQuestion();
     }
 
     /**
@@ -99,22 +115,14 @@ public class QuizActivity extends ActionBarActivity {
     }
 
     /*
-    Creates and binds the first question for the geoquiz game
+    binds references to view object defined in the layout file
      */
-    private void BindFirstQuestion() {
-        mQuestionTextView = (TextView)findViewById(R.id.question_text_view);
-        updateQuestion();
-    }
-
-
-    /*
-    binds references to the true, false, and next buttons
-     */
-    private void BindButtons(){
-        //get references to the inflated view objects for the buttons
+    private void bindUiElementReferences(){
+        //get references to the inflated view objects
         mTrueButton = (Button)findViewById(R.id.true_button);
         mFalseButton = (Button)findViewById(R.id.false_button);
         mNextButton = (Button)findViewById(R.id.next_button);
+        mQuestionTextView = (TextView)findViewById(R.id.question_text_view);
     }
 
 
