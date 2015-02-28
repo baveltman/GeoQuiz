@@ -1,6 +1,7 @@
 package geoquiz.apps.baveltman.geoquiz;
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -31,6 +32,7 @@ public class QuizActivity extends ActionBarActivity {
     private ImageButton mPrevButton;
 
     private TextView mQuestionTextView;
+    private TextView mApiLevel;
 
     private TrueFalse[] mQuestionBank = new TrueFalse[] {
             new TrueFalse(R.string.question_oceans, true),
@@ -56,7 +58,16 @@ public class QuizActivity extends ActionBarActivity {
         bindOnClickListeners();
         BindCurrentQuestionIndex(savedInstanceState);
         updateQuestion();
+        bindAndroidVersion();
 
+    }
+
+    /**
+     * displays current API version to user
+     */
+    private void bindAndroidVersion() {
+        int apiLevel = Build.VERSION.SDK_INT;
+        mApiLevel.setText("API Level " + apiLevel);
     }
 
     @Override
@@ -206,6 +217,7 @@ public class QuizActivity extends ActionBarActivity {
         mNextButton = (ImageButton)findViewById(R.id.next_button);
         mPrevButton = (ImageButton)findViewById(R.id.prev_button);
         mQuestionTextView = (TextView)findViewById(R.id.question_text_view);
+        mApiLevel = (TextView)findViewById(R.id.api_level_text);
     }
 
 
