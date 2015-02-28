@@ -21,6 +21,9 @@ public class QuizActivity extends ActionBarActivity {
     //key for bundle to retrieve index state
     private static final String KEY_INDEX = "index";
 
+    public static final String EXTRA_ANSWER_IS_TRUE =
+            "baveltman.apps.geoquiz.answer_is_true";
+
     private Button mTrueButton;
     private Button mFalseButton;
     private Button mCheatButton;
@@ -61,6 +64,20 @@ public class QuizActivity extends ActionBarActivity {
         super.onSaveInstanceState(savedInstanceState);
         Log.i(TAG, "onSaveInstanceState");
         savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {
+            return;
+        }
+        boolean isCheater = data.getBooleanExtra(CheatActivity.EXTRA_ANSWER_WAS_SHOWN, false);
+
+        if (isCheater){
+            Toast.makeText(QuizActivity.this,
+                    R.string.judgment_toast,
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -119,8 +136,10 @@ public class QuizActivity extends ActionBarActivity {
             @Override
             public void onClick(View v){
                 //start cheat activity
+                boolean answerToCurrentQuestion = mQuestionBank[mCurrentIndex].isTrueQuestion();
                 Intent i = new Intent(QuizActivity.this, CheatActivity.class);
-                startActivity(i);
+                i.putExtra(EXTRA_ANSWER_IS_TRUE, answerToCurrentQuestion);
+                startActivityForResult(i, 0);
             }
         });
     }
