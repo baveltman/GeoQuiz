@@ -1,5 +1,6 @@
 package geoquiz.apps.baveltman.geoquiz;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -22,6 +23,7 @@ public class QuizActivity extends ActionBarActivity {
 
     private Button mTrueButton;
     private Button mFalseButton;
+    private Button mCheatButton;
     private ImageButton mNextButton;
     private ImageButton mPrevButton;
 
@@ -112,6 +114,15 @@ public class QuizActivity extends ActionBarActivity {
                 goToNextQuestion();
             }
         });
+
+        mCheatButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                //start cheat activity
+                Intent i = new Intent(QuizActivity.this, CheatActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     /**
@@ -172,6 +183,7 @@ public class QuizActivity extends ActionBarActivity {
         //get references to the inflated view objects
         mTrueButton = (Button)findViewById(R.id.true_button);
         mFalseButton = (Button)findViewById(R.id.false_button);
+        mCheatButton = (Button)findViewById(R.id.cheat_button);
         mNextButton = (ImageButton)findViewById(R.id.next_button);
         mPrevButton = (ImageButton)findViewById(R.id.prev_button);
         mQuestionTextView = (TextView)findViewById(R.id.question_text_view);
