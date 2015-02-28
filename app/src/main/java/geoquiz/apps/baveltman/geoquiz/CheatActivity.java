@@ -14,10 +14,11 @@ public class CheatActivity extends ActionBarActivity {
     private boolean mHasCheated = false;
     private boolean mAnswerIsTrue = false;
 
+    //key in response intent for parent activity to determine whether user cheated while on this activity
     public static final String EXTRA_ANSWER_WAS_SHOWN =
             "baveltman.apps.geoquiz.answer_shown";
 
-    //key for bundle to retrieve index state
+    //key for bundle to retrieve state that saves whether the player has cheated
     private static final String HAS_CHEATED = "hasCheated";
 
     @Override
